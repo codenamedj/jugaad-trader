@@ -209,10 +209,12 @@ class Zerodha(KiteConnect):
         else:
             self.r = self.reqsession.get(instruments_url)
         return self._parse_instruments(self.r.text)
-    def historical(self,instrumentToken,fromDate,toDate,interval)
+    
+    def historicalData(self,instrumentToken,fromDate,toDate,interval):
         histDataUrl = "https://kite.zerodha.com/oms/instruments/historical/"+instrumentToken+"/"+interval+"?user_id="+self.user_id+"&oi=1&"+"from="+fromDate+"&to="+toDate
         self.r = self.reqsession.get(histDataUrl)
         return self.r.text
+
     def close(self):
         self.reqsession.close()
    
