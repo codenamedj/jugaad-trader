@@ -212,7 +212,19 @@ class Zerodha(KiteConnect):
     
     def historicalData(self,instrumentToken,fromDate,toDate,interval):
         histDataUrl = "https://kite.zerodha.com/oms/instruments/historical/"+instrumentToken+"/"+interval+"?user_id="+self.user_id+"&oi=1&"+"from="+fromDate+"&to="+toDate
-        self.r = self.reqsession.get(histDataUrl)
+        #self.r = self.reqsession.get(histDataUrl)
+        # Custom headers
+        headers = self.custom_headers()
+        self.r = self.reqsession.request("GET",
+                                    histDataUrl,
+                                    json=None,
+                                    data=None,
+                                    params=None,
+                                    headers=headers,
+                                    verify=not self.disable_ssl,
+                                    allow_redirects=True,
+                                    timeout=self.timeout,
+                                    proxies=self.proxies)
         return self.r.text
 
     def close(self):
