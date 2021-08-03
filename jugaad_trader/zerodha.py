@@ -119,7 +119,7 @@ class Zerodha(KiteConnect):
         h['sec-fetch-dest'] = 'empty'
         h['x-kite-userid'] = self.user_id
         return h
-    
+
     def _request(self, route, method, url_args=None, params=None,
                  is_json=False, query_params=None):
         if url_args:
@@ -214,7 +214,15 @@ class Zerodha(KiteConnect):
         histDataUrl = "https://kite.zerodha.com/oms/instruments/historical/"+instrumentToken+"/"+interval+"?user_id="+self.user_id+"&oi=1&"+"from="+fromDate+"&to="+toDate
         #self.r = self.reqsession.get(histDataUrl)
         # Custom headers
-        headers = self.custom_headers()
+        h = {}
+        h['authorization'] = "enctoken {}".format(self.enc_token)
+        h['referer'] = 'https://kite.zerodha.com/dashboard'
+        h['x-kite-version'] = '3.9.4'
+        h['sec-fetch-site'] = 'same-origin'
+        h['sec-fetch-mode'] = 'cors'
+        h['sec-fetch-dest'] = 'empty'
+        self.s.headers.update(h) # Update the request session object with headers
+        #headers = self.custom_headers()
         self.r = self.reqsession.request("GET",
                                     histDataUrl,
                                     json=None,
