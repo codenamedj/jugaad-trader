@@ -228,7 +228,7 @@ class Zerodha(KiteConnect):
                                     json=None,
                                     data=None,
                                     params=None,
-                                    headers=headers,
+                                    headers=h,
                                     verify=not self.disable_ssl,
                                     allow_redirects=True,
                                     timeout=self.timeout,
